@@ -1,0 +1,173 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ttsvetanov.shipsgame.SettingsFragment">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="1">
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <TextView
+                android:text="Ship 1:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ship1" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:id="@+id/seekBar1"
+                android:layout_weight="0.95" />
+
+            <Switch
+                android:text="Vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch1"
+                android:layout_weight="0.00" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <TextView
+                android:text="Ship 2:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ship2" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:id="@+id/seekBar2"
+                android:layout_weight="0.95" />
+
+            <Switch
+                android:text="Vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch2"
+                android:layout_weight="0.00" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <TextView
+                android:text="Ship 3:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ship3" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:id="@+id/seekBar3"
+                android:layout_weight="0.95" />
+
+            <Switch
+                android:text="Vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch3"
+                android:layout_weight="0.00" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <TextView
+                android:text="Ship 4:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ship4" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:id="@+id/seekBar4"
+                android:layout_weight="0.95" />
+
+            <Switch
+                android:text="Vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch4"
+                android:layout_weight="0.00" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+            <TextView
+                android:text="Ship 5:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/ship5" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="195dp"
+                android:layout_height="wrap_content"
+                android:max="5"
+                android:progress="0"
+                android:id="@+id/seekBar5"
+                android:layout_weight="0.95" />
+
+            <Switch
+                android:text="Vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/switch5"
+                android:layout_weight="0.00" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:text="SAVE SETTINGS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/save_button"
+            android:layout_weight="0.16" />
+
+
+    </LinearLayout>
+
+
+
+</FrameLayout>

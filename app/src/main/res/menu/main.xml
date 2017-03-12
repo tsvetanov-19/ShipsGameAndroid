@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
+</menu>
