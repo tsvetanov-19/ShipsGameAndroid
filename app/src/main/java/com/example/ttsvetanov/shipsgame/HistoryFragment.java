@@ -46,16 +46,16 @@ public class HistoryFragment extends Fragment {
         super.onCreate(savedInstanceState);
         dh = new DatabaseHelper(this.getContext());
         Cursor cursor = dh.getGameData();
-//        if (cursor.moveToFirst()){
-//            while(!cursor.isAfterLast()){
-//                String date = cursor.getString(cursor.getColumnIndex("date"));
-//                String result = cursor.getString(cursor.getColumnIndex("result"));
-//                String turns = cursor.getString(cursor.getColumnIndex("turns"));
-//                // do what ever you want here
-//                cursor.moveToNext();
-//            }
-//        }
-//        cursor.close();
+        if (cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                String result = cursor.getString(cursor.getColumnIndex("result"));
+                String turns = cursor.getString(cursor.getColumnIndex("turns"));
+                // do what ever you want here
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
 
         simpleCursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_history, cursor, fromGame, toGame
                 , CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);

@@ -16,6 +16,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 
+
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -37,6 +38,7 @@ public class GameFragment extends Fragment {
     private DatabaseHelper dh;
     private ImageAdapter mImageAdapter;
     private GridView mGridView;
+    private int shipSquaresTotal = 0;
 
     private OnFragmentInteractionListener mListener;
 
@@ -103,6 +105,9 @@ public class GameFragment extends Fragment {
 //
         }
         cursor.close();
+        for (int s: ships) {
+            shipSquaresTotal += s;
+        }
 //        ships = [2,3,4,5,5];
 //        isVertical = {false,false,true, true,false};
         if (ships != null && ships.length > 0) {

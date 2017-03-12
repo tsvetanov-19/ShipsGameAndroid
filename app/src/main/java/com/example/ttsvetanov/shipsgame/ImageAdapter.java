@@ -74,7 +74,7 @@ public class ImageAdapter extends BaseAdapter {
             case 3 : mThumbIds[thumbId] = ImageAdapter.SHIP_THREE; break;
             case 4 : mThumbIds[thumbId] = ImageAdapter.SHIP_FOUR; break;
             case 5 : mThumbIds[thumbId] = ImageAdapter.SHIP_FIVE; break;
-            default : mThumbIds[thumbId] = ImageAdapter.SQUIDWARD_JPG;
+            default : mThumbIds[thumbId] = ImageAdapter.PATRICK_JPG;
         }
     }
 

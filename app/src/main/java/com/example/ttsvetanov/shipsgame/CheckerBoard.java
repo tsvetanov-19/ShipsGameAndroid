@@ -51,7 +51,6 @@ public class CheckerBoard {
         int startCoord = 0;
         int endCoord =  CheckerBoard.BOARD_SIDE;
         int[] squareId = new int[size];
-        int[] occupied = new int[CheckerBoard.BOARD_SIZE];
         int id = 0;
 
         //find ship place by randomly choosing start position
@@ -83,17 +82,18 @@ public class CheckerBoard {
             }
             else {
                 if(isVertical) {
+                    // add one row to previous square
                     squareId[id] = squareId[id-1] +CheckerBoard.BOARD_SIDE;
                 }
                 else {
+                    //add one column to previous square
                     squareId[id] = squareId[id-1] +1;
                 }
             }
 
-//occupied[squareId[id]] == 1 ||
+
             if(squareOccupied(squareId[id])) {
                 //reset
-//                occupied[squareId[id]] = 1;
                 squareId[id] = -1;
                 id = 0;
             }
