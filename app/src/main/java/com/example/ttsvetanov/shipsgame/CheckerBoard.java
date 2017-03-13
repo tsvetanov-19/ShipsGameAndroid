@@ -126,7 +126,7 @@ public class CheckerBoard {
     protected boolean squareOccupied(int squareId) {
 
         if(
-                (squareId < 0 || squareId > 63)
+                (squareId < 0 || squareId > CheckerBoard.BOARD_SIZE)
                               ||
                     (getSquare(squareId) > 0)
         )
