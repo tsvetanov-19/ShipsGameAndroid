@@ -9,10 +9,13 @@ import java.util.Random;
  */
 
 public class CheckerBoard {
-    protected final static  int BOARD_SIZE = 64;
     protected final static  int BOARD_SIDE = 8;
+    protected final static  int BOARD_SIZE = BOARD_SIDE * BOARD_SIDE;
     protected int[] board;
 
+    /**
+     * initialize board with empty square fields
+     */
     public CheckerBoard() {
         board = new int[CheckerBoard.BOARD_SIZE];
         for(int i=0; i<BOARD_SIZE;i++) {
@@ -46,6 +49,12 @@ public class CheckerBoard {
         }
     }
 
+    /**
+     *
+     * @param size integer -  size of the ship in squares - range[0,5]
+     * @param isVertical boolean - true if ship vertically placed, false if horizontally placed
+     * @param shipIndex integer - index of ship - range[1,5] array indices shifted by 1
+     */
     protected void setCurrentShip(int size, boolean isVertical, int shipIndex) {
 
         int startCoord = 0;
@@ -55,7 +64,7 @@ public class CheckerBoard {
 
         //find ship place by randomly choosing start position
 
-        // repeat until suitable place is found
+        // repeat until suitable place for the ship is found
         do {
             //Set random start position
             if(id == 0) {
@@ -91,7 +100,6 @@ public class CheckerBoard {
                 }
             }
 
-
             if(squareOccupied(squareId[id])) {
                 //reset
                 squareId[id] = -1;
@@ -102,16 +110,17 @@ public class CheckerBoard {
                 id++;
             }
         }
+        //loop until all ship squares are properly placed
         while(id < size);
-        // then save the squares we found to game checkboard
+        // then save the squares we found to the checkerboard
         setSquareArray(squareId, shipIndex);
 
     }
 
     /**
-     *
-     * @param squareId
-     * @return
+     * self explainatory method name
+     * @param squareId integer - range[0, MAX_BOARD_INDEX]
+     * @return true if occupied, false if square is free
      */
 
     protected boolean squareOccupied(int squareId) {
@@ -126,6 +135,12 @@ public class CheckerBoard {
         return false;
     }
 
+    /**
+     * Method returns random integer in a given range
+     * @param min
+     * @param max
+     * @return random integer in range [min, max]
+     */
     protected static int randInt(int min, int max) {
 
         // Usually this can be a field rather than a method variable
