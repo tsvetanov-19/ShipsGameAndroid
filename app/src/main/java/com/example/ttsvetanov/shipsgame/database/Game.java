@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.database;
 
 /**
  * Created by ttsvetanov on 24.02.17.

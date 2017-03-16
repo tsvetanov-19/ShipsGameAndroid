@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.utils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

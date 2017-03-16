@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.example.ttsvetanov.shipsgame.database.Game;
+import com.example.ttsvetanov.shipsgame.database.Ships;
 
 /**
  * Created by ttsvetanov on 24.02.17.
@@ -39,12 +42,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SHIP_4 = "ship4";
     public static final String COLUMN_SHIP_5 = "ship5";
 
-//    public static final String COLUMN_SHIP_1_SIZE = "size_ship1";
-//    public static final String COLUMN_SHIP_2_SIZE = "size_ship2";
-//    public static final String COLUMN_SHIP_3_SIZE = "size_ship3";
-//    public static final String COLUMN_SHIP_4_SIZE = "size_ship4";
-//    public static final String COLUMN_SHIP_5_SIZE = "size_ship5";
-
 
     public static final String COLUMN_SHIP_1_ORIENTATION = "orientation_ship1";
     public static final String COLUMN_SHIP_2_ORIENTATION = "orientation_ship2";
@@ -63,23 +60,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_SHIPS =
             "CREATE TABLE " + TABLE_SHIPS + "(" +
-                    "'" + COLUMN_SHIP_ID + "' INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "'" + COLUMN_SHIP_1 + "' INTEGER," +
-                    "'" + COLUMN_SHIP_2 + "' INTEGER," +
-                    "'" + COLUMN_SHIP_3 + "' INTEGER," +
-                    "'" + COLUMN_SHIP_4 + "' INTEGER," +
-                    "'" + COLUMN_SHIP_5 + "' INTEGER," +
-//                    "'" + COLUMN_SHIP_1_SIZE + "' INTEGER," +
-//                    "'" + COLUMN_SHIP_2_SIZE + "' INTEGER," +
-//                    "'" + COLUMN_SHIP_3_SIZE + "' INTEGER," +
-//                    "'" + COLUMN_SHIP_4_SIZE + "' INTEGER," +
-//                    "'" + COLUMN_SHIP_5_SIZE + "' INTEGER," +
-                    "'" + COLUMN_SHIP_1_ORIENTATION + "' INTEGER," +
-                    "'" + COLUMN_SHIP_2_ORIENTATION + "' INTEGER," +
-                    "'" + COLUMN_SHIP_3_ORIENTATION + "' INTEGER," +
-                    "'" + COLUMN_SHIP_4_ORIENTATION + "' INTEGER," +
-                    "'" + COLUMN_SHIP_5_ORIENTATION + "' INTEGER," +
-                    "'" + COLUMN_MAX_SHOTS + "' INTEGER NOT NULL DEFAULT 25)";
+                    "`" + COLUMN_SHIP_ID + "` INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "`" + COLUMN_SHIP_1 + "` INTEGER," +
+                    "`" + COLUMN_SHIP_2 + "` INTEGER," +
+                    "`" + COLUMN_SHIP_3 + "` INTEGER," +
+                    "`" + COLUMN_SHIP_4 + "` INTEGER," +
+                    "`" + COLUMN_SHIP_5 + "` INTEGER," +
+                    "`" + COLUMN_SHIP_1_ORIENTATION + "` INTEGER," +
+                    "`" + COLUMN_SHIP_2_ORIENTATION + "` INTEGER," +
+                    "`" + COLUMN_SHIP_3_ORIENTATION + "` INTEGER," +
+                    "`" + COLUMN_SHIP_4_ORIENTATION + "` INTEGER," +
+                    "`" + COLUMN_SHIP_5_ORIENTATION + "` INTEGER," +
+                    "`" + COLUMN_MAX_SHOTS + "` INTEGER NOT NULL DEFAULT 25)";
 
 
     public DatabaseHelper(Context context) {
@@ -88,14 +80,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_GAME);
-        sqLiteDatabase.execSQL(CREATE_TABLE_SHIPS);
+        sqLiteDatabase.execSQL(DatabaseHelper.CREATE_TABLE_GAME);
+        sqLiteDatabase.execSQL(DatabaseHelper.CREATE_TABLE_SHIPS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_GAME);
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_SHIPS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DatabaseHelper.TABLE_GAME);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + DatabaseHelper.TABLE_SHIPS);
         onCreate(sqLiteDatabase);
     }
 
@@ -104,12 +96,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db = getWritableDatabase();
 
             ContentValues cv = new ContentValues();
-            cv.put(COLUMN_GAME_ID, game.get_id());
-            cv.put(COLUMN_GAME_RESULT, game.getResult());
-            cv.put(COLUMN_GAME_DATE, game.getDate());
-            cv.put(COLUMN_GAME_TURNS, game.getTurns());
+            cv.put(DatabaseHelper.COLUMN_GAME_ID, game.get_id());
+            cv.put(DatabaseHelper.COLUMN_GAME_RESULT, game.getResult());
+            cv.put(DatabaseHelper.COLUMN_GAME_DATE, game.getDate());
+            cv.put(DatabaseHelper.COLUMN_GAME_TURNS, game.getTurns());
 
-            db.insertOrThrow(TABLE_GAME, null, cv);
+            db.insertOrThrow(DatabaseHelper.TABLE_GAME, null, cv);
 
         }catch (SQLException e){
             Log.wtf(ERROR_TAG, e.getMessage());
@@ -122,7 +114,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getGameData() {
         try{
             db = getReadableDatabase();
-            String query = "SELECT date, result, turns FROM " + TABLE_GAME;
+            String query = "SELECT date, result, turns FROM " + DatabaseHelper.TABLE_GAME;
             return db.rawQuery(query, null);
 
         }catch (SQLException e){
@@ -139,27 +131,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             ContentValues cv = new ContentValues();
 //            cv.put(COLUMN_SHIP_ID, ships.get_id());
-            cv.put(COLUMN_SHIP_1, ships.getShip1());
-            cv.put(COLUMN_SHIP_2, ships.getShip2());
-            cv.put(COLUMN_SHIP_3, ships.getShip3());
-            cv.put(COLUMN_SHIP_4, ships.getShip4());
-            cv.put(COLUMN_SHIP_5, ships.getShip5());
+            cv.put(DatabaseHelper.COLUMN_SHIP_1, ships.getShip1());
+            cv.put(DatabaseHelper.COLUMN_SHIP_2, ships.getShip2());
+            cv.put(DatabaseHelper.COLUMN_SHIP_3, ships.getShip3());
+            cv.put(DatabaseHelper.COLUMN_SHIP_4, ships.getShip4());
+            cv.put(DatabaseHelper.COLUMN_SHIP_5, ships.getShip5());;
 
-//            cv.put(COLUMN_SHIP_1_SIZE, ships.getShip1_size());
-//            cv.put(COLUMN_SHIP_2_SIZE, ships.getShip2_size());
-//            cv.put(COLUMN_SHIP_3_SIZE, ships.getShip3_size());
-//            cv.put(COLUMN_SHIP_4_SIZE, ships.getShip4_size());
-//            cv.put(COLUMN_SHIP_5_SIZE, ships.getShip5_size());
-
-            cv.put(COLUMN_SHIP_1_ORIENTATION, ships.getShip1_orientation());
-            cv.put(COLUMN_SHIP_2_ORIENTATION, ships.getShip2_orientation());
-            cv.put(COLUMN_SHIP_3_ORIENTATION, ships.getShip3_orientation());
-            cv.put(COLUMN_SHIP_4_ORIENTATION, ships.getShip4_orientation());
-            cv.put(COLUMN_SHIP_5_ORIENTATION, ships.getShip5_orientation());
-            cv.put(COLUMN_MAX_SHOTS, ships.getMaxGameShots());
+            cv.put(DatabaseHelper.COLUMN_SHIP_1_ORIENTATION, ships.getShip1_orientation());
+            cv.put(DatabaseHelper.COLUMN_SHIP_2_ORIENTATION, ships.getShip2_orientation());
+            cv.put(DatabaseHelper.COLUMN_SHIP_3_ORIENTATION, ships.getShip3_orientation());
+            cv.put(DatabaseHelper.COLUMN_SHIP_4_ORIENTATION, ships.getShip4_orientation());
+            cv.put(DatabaseHelper.COLUMN_SHIP_5_ORIENTATION, ships.getShip5_orientation());
+            cv.put(DatabaseHelper.COLUMN_MAX_SHOTS, ships.getMaxGameShots());
 
 
-            db.insertOrThrow(TABLE_SHIPS, null, cv);
+            db.insertOrThrow(DatabaseHelper.TABLE_SHIPS, null, cv);
 
         }catch (SQLException e){
             status = e.getMessage();
@@ -177,7 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         try{
             db = getReadableDatabase();
-            String query = "SELECT * FROM " + TABLE_SHIPS;
+            String query = "SELECT * FROM " + DatabaseHelper.TABLE_SHIPS;
             return db.rawQuery(query, null);
 
         }catch (SQLException e){

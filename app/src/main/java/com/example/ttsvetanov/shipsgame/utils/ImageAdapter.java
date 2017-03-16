@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.utils;
 
 import android.content.Context;
 import android.view.View;
@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.example.ttsvetanov.shipsgame.R;
+
 /**
  * Created by ttsvetanov on 18.02.17.
  */
@@ -14,16 +16,16 @@ import android.widget.ImageView;
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
 
-    protected static int SPONGEBOB_JPG = R.drawable.spongo;
+    private static int SPONGEBOB_JPG = R.drawable.spongo;
 
-    protected static int SQUIDWARD_JPG = R.drawable.squid;
-    protected static int PATRICK_JPG = R.drawable.patrick;
-    protected static int SHIP_ONE = R.drawable.one;
+    private static int SQUIDWARD_JPG = R.drawable.squid;
+    private static int PATRICK_JPG = R.drawable.patrick;
+    private static int SHIP_ONE = R.drawable.one;
 
-    protected static int SHIP_TWO = R.drawable.two;
-    protected static int SHIP_THREE = R.drawable.three;
-    protected static int SHIP_FOUR = R.drawable.four;
-    protected static int SHIP_FIVE = R.drawable.five;
+    private static int SHIP_TWO = R.drawable.two;
+    private static int SHIP_THREE = R.drawable.three;
+    private static int SHIP_FOUR = R.drawable.four;
+    private static int SHIP_FIVE = R.drawable.five;
     public ImageAdapter(Context c) {
         mContext = c;
     }
@@ -67,7 +69,7 @@ public class ImageAdapter extends BaseAdapter {
         return imageView;
     }
 
-    protected void setImage(int thumbId, int value) {
+    private void setImage(int thumbId, int value) {
         switch(value) {
             case 1 : mThumbIds[thumbId] = ImageAdapter.SHIP_ONE; break;
             case 2 : mThumbIds[thumbId] = ImageAdapter.SHIP_TWO; break;
@@ -78,7 +80,7 @@ public class ImageAdapter extends BaseAdapter {
         }
     }
 
-    protected int getImageId(int thumbId) {
+    public int getImageId(int thumbId) {
         return  mThumbIds[thumbId];
     }
 

@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.database;
 
 import java.io.Serializable;
 import java.util.Random;

@@ -1,5 +1,6 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.fragments;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.database.Cursor;
@@ -11,10 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
+import com.example.ttsvetanov.shipsgame.database.Game;
+import com.example.ttsvetanov.shipsgame.game.CheckerBoard;
+import com.example.ttsvetanov.shipsgame.database.DatabaseHelper;
+import com.example.ttsvetanov.shipsgame.utils.ImageAdapter;
+import com.example.ttsvetanov.shipsgame.R;
+import com.example.ttsvetanov.shipsgame.utils.Utils;
+
+import java.util.Date;
 
 
 /**
@@ -35,17 +42,70 @@ public class GameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private CheckerBoard board;
-    private DatabaseHelper dh;
     private ImageAdapter mImageAdapter;
     private GridView mGridView;
+    private int shots = 0;
+
+    private DatabaseHelper dh = new DatabaseHelper(getContext());
+
+
+    private int hits = 0;
+
+
+    public int getHits() {
+        return hits;
+    }
+
+    public void setHits(int hits) {
+        this.hits = hits;
+    }
+
+    public int incrementHits() {
+        int hits = getHits()+1;
+        setHits(hits);
+        return getHits();
+    }
+    public int getShipSquaresTotal() {
+        return shipSquaresTotal;
+    }
+
+    public void setShipSquaresTotal(int shipSquaresTotal) {
+        this.shipSquaresTotal = shipSquaresTotal;
+    }
+
     private int shipSquaresTotal = 0;
+
+    public int getMaxShots() {
+        return maxShots;
+    }
+
+    public void setMaxShots(int maxShots) {
+        this.maxShots = maxShots;
+    }
+
+    private int maxShots = 0;
+
+    public int getShots() {
+        return shots;
+    }
+
+    public void setShots(int shots) {
+        this.shots = shots;
+    }
+
+    public int incrementShots() {
+        int shots = getShots()+1;
+        setShots(shots);
+        return getShots();
+    }
+
+
 
     private OnFragmentInteractionListener mListener;
 
     public GameFragment() {
         // Required empty public constructor
     }
-
 
     /**
      * Use this factory method to create a new instance of
@@ -82,39 +142,46 @@ public class GameFragment extends Fragment {
 
 
         dh = new DatabaseHelper(this.getContext());
-        Cursor cursor = dh.getGameData();
+        Cursor cursor = dh.getShipsData();
         int[] ships =  {5,5,5,5,5};
-        int shots = 55;
-        boolean[] isVertical = {true,false,true,true, false};
-        if (cursor.moveToFirst()) {
-            shots = cursor.getInt(cursor.getColumnIndex("max_shots"));
+        int max = 0;
+        boolean[] isVertical = {true,true,true, true,true};
+//        if (cursor.moveToFirst()) {
+//            max = cursor.getInt(cursor.getColumnIndex("max_shots"));
+//            setMaxShots(max);
+//            int[] ship = new int[5];
+//            boolean[] vertical = new boolean[5];
+//            ship[0] = cursor.getInt(cursor.getColumnIndex("ship1")) ;
+//            ship[1] = cursor.getInt(cursor.getColumnIndex("ship2"));
+//            ship[2] = cursor.getInt(cursor.getColumnIndex("ship3"));
+//            ship[3]= cursor.getInt(cursor.getColumnIndex("ship4"));
+//            ship[4]= cursor.getInt(cursor.getColumnIndex("ship5"));
 //
-//            ships[0] = cursor.getInt(cursor.getColumnIndex("ship1"));
-//            ships[1] = cursor.getInt(cursor.getColumnIndex("ship2"));
-//            ships[2] = cursor.getInt(cursor.getColumnIndex("ship3"));
-//            ships[3] = cursor.getInt(cursor.getColumnIndex("ship4"));
-//            ships[4] = cursor.getInt(cursor.getColumnIndex("ship5"));
 //
-//
-//            isVertical[0] = cursor.getInt(cursor.getColumnIndex("orientation_ship1")) > 0;
-//            isVertical[1] = cursor.getInt(cursor.getColumnIndex("orientation_ship2")) > 0;
-//            isVertical[2] = cursor.getInt(cursor.getColumnIndex("orientation_ship3")) > 0;
-//            isVertical[3] = cursor.getInt(cursor.getColumnIndex("orientation_ship4")) > 0;
-//            isVertical[4] = cursor.getInt(cursor.getColumnIndex("orientation_ship5")) > 0;
-//            shots = cursor.getInt(cursor.getColumnIndex("max_shots"));
-//
-        }
+//            vertical[0] = cursor.getInt(cursor.getColumnIndex("orientation_ship1")) > 0;
+//            vertical[1] = cursor.getInt(cursor.getColumnIndex("orientation_ship2")) > 0;
+//            vertical[2] = cursor.getInt(cursor.getColumnIndex("orientation_ship3")) > 0;
+//            vertical[3] = cursor.getInt(cursor.getColumnIndex("orientation_ship4")) > 0;
+//            vertical[4] = cursor.getInt(cursor.getColumnIndex("orientation_ship5")) > 0;
+//            int totalShips = 0;
+//            for(int i = 0 ; i<ship.length;i++) {
+//                if(ship[i] > 0) {
+//                    totalShips++;
+//                    ships[totalShips] = ship[i];
+//                    isVertical[totalShips] = vertical[i];
+//                }
+//            }
+//        }
         cursor.close();
         for (int s: ships) {
             shipSquaresTotal += s;
         }
-//        ships = [2,3,4,5,5];
-//        isVertical = {false,false,true, true,false};
-        if (ships != null && ships.length > 0) {
+
+        if (ships.length > 0) {
 
             board.setShips(ships, isVertical);
         } else {
-            Toast.makeText(getView().getContext(), "Error!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
         }
         // Inflate the layout for this fragment
         mImageAdapter = new ImageAdapter(view.getContext());
@@ -125,15 +192,28 @@ public class GameFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View v,
                                     int position, long id) {
 
-                int hits = 0;
                 if(mImageAdapter.getImageId(position) == ImageAdapter.getSpongebobJpg()) {
-                    uncover(position);
-                    hits++;
+                    int p = uncover(position);
+                    switch (p) {
+                        case 1: incrementHits();  break;
+                        case 2: incrementHits();  break;
+                        case 3: incrementHits();  break;
+                        case 4: incrementHits();  break;
+                        case 5: incrementHits(); break;
+                        default: break;
+                    }
+                    incrementShots();
+
+                    //Player wins!
+                    if(getHits() == getShipSquaresTotal()) {
+                        finishGame("won",getShots());
+                    }
 
 //                    Toast.makeText(v.getContext(), "pos: " + board.getSquare(position) + " id: " + id,
 //                            Toast.LENGTH_SHORT).show();
-                    if(hits == 55) {
-//                        finishGame();
+                    //Player loses!
+                    if(getShots() == getMaxShots()) {
+                        finishGame("lost", getShots());
                         Toast.makeText(v.getContext(), "END" + hits,
                                 Toast.LENGTH_SHORT).show();
                     }
@@ -155,12 +235,21 @@ public class GameFragment extends Fragment {
         }
     }
 
-    protected void uncover(int position) {
+    protected int uncover(int position) {
         int value = board.getSquare(position);
 //        if(value)
         mImageAdapter.flipImage(position, value);
         mImageAdapter.notifyDataSetChanged();
+        return value;
 
+    }
+
+    private void finishGame(String result, int shots) {
+        Game g = new Game();
+        g.setResult(result);
+        g.setTurns(Integer.toString(shots));
+        g.setDate("data data vajna data");
+        dh.insertNewGame(g);
     }
 
     @Override
@@ -193,5 +282,12 @@ public class GameFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Snackbar.make(getView(), "Snackbar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show();
     }
 }

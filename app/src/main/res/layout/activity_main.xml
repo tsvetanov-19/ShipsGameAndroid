@@ -13,19 +13,19 @@
         <!--android:layout_width="fill_parent"-->
         <!--android:layout_height="fill_parent">-->
 
-        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.GameFragment"-->
+        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.fragments.GameFragment"-->
             <!--android:id="@+id/game_fragment"-->
             <!--android:layout_weight="one"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="match_parent" />-->
 
-        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.SettingsFragment"-->
+        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.fragments.SettingsFragment"-->
             <!--android:id="@+id/settings_fragment"-->
             <!--android:layout_weight="two"-->
             <!--android:layout_width="0dp"-->
             <!--android:layout_height="match_parent" />-->
 
-        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.HistoryFragment"-->
+        <!--<fragment android:name="com.example.ttsvetanov.shipsgame.fragments.HistoryFragment"-->
             <!--android:id="@+id/history_fragment"-->
             <!--android:layout_weight="3"-->
             <!--android:layout_width="0dp"-->

@@ -1,10 +1,14 @@
-package com.example.ttsvetanov.shipsgame;
-
-import android.util.Log;
+package com.example.ttsvetanov.shipsgame.game;
 
 import java.util.Random;
 
 /**
+ * Square board where ships are placed
+ * Square values stored in single-dimensional array
+ * square value = 0 if no ship
+ * square value = 1 if ship1 is on the square
+ * ... etc
+ * square value = 1 if ship5 is on the square
  * Created by ttsvetanov on 02.03.17.
  */
 
@@ -42,10 +46,11 @@ public class CheckerBoard {
 
     public void setShips(int[] ships, boolean[] isVertical) {
         int shipIndex = 0;
-
-        for (int size: ships) {
-            setCurrentShip(size, isVertical[shipIndex], shipIndex+1);
-            shipIndex++;
+        if(ships.length > 0) {
+            for (int size: ships) {
+                setCurrentShip(size, isVertical[shipIndex], shipIndex+1);
+                shipIndex++;
+            }
         }
     }
 
@@ -136,9 +141,9 @@ public class CheckerBoard {
     }
 
     /**
-     * Method returns random integer in a given range
-     * @param min
-     * @param max
+     * Method returns random integer in a given range inclusively
+     * @param min floor
+     * @param max ceil
      * @return random integer in range [min, max]
      */
     protected static int randInt(int min, int max) {

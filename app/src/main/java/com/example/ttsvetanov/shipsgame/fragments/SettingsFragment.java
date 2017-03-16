@@ -1,19 +1,23 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.fragments;
 
-import android.content.Context;
-import android.net.Uri;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.TextView;
+import android.widget.Switch;
 import android.widget.Toast;
+
+import com.example.ttsvetanov.shipsgame.database.DatabaseHelper;
+import com.example.ttsvetanov.shipsgame.R;
+import com.example.ttsvetanov.shipsgame.database.Ships;
+
+import static com.example.ttsvetanov.shipsgame.R.styleable.CompoundButton;
 
 
 /**
@@ -39,11 +43,11 @@ public class SettingsFragment extends Fragment {
 
     private Ships ships;
 
-    private int s1;
-    private int s2;
-    private int s3;
-    private int s4;
-    private int s5;
+    public int s1;
+    public int s2;
+    public int s3;
+    public int s4;
+    public int s5;
 
     public Ships getShips() {
         return ships;
@@ -123,6 +127,7 @@ public class SettingsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        dh = new DatabaseHelper(getContext());
 
 
     }
@@ -132,16 +137,40 @@ public class SettingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_settings, container, false);
-        SeekBar[] seekBar = new SeekBar[5];
-        seekBar[0] = (SeekBar) view.findViewById(R.id.seekBar1);
-        seekBar[1] = (SeekBar) view.findViewById(R.id.seekBar2);
-        seekBar[2] = (SeekBar) view.findViewById(R.id.seekBar3);
-        seekBar[3] = (SeekBar) view.findViewById(R.id.seekBar4);
-        seekBar[4] = (SeekBar) view.findViewById(R.id.seekBar5);
+        SeekBar[] seekBars = new SeekBar[5];
+        seekBars[0] = (SeekBar) view.findViewById(R.id.seekBar1);
+        seekBars[1] = (SeekBar) view.findViewById(R.id.seekBar2);
+        seekBars[2] = (SeekBar) view.findViewById(R.id.seekBar3);
+        seekBars[3] = (SeekBar) view.findViewById(R.id.seekBar4);
+        seekBars[4] = (SeekBar) view.findViewById(R.id.seekBar5);
+
+        Switch[] switches = {
+                (Switch) view.findViewById(R.id.switch1), (Switch) view.findViewById(R.id.switch2),
+                (Switch) view.findViewById(R.id.switch3), (Switch) view.findViewById(R.id.switch4),
+                (Switch) view.findViewById(R.id.switch5)
+        };
+
+        for(Switch s : switches) {
+            if (s != null) {
+
+//                s.setOnCheckedChangeListener(
+//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                    Toast.makeText(this, "The Switch is " + (isChecked ? "on" : "off"),
+//                            Toast.LENGTH_SHORT).show();
+//                    if(isChecked) {
+//                        //do stuff when Switch is ON
+//                    } else {
+//                        //do stuff when Switch if OFF
+//                    }
+//                });
+            }
+
+        }
 
 
-        for (int s = 0; s < seekBar.length; s++) {
-            seekBar[s].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+
+        for (int bar = 0; bar < seekBars.length; bar++) {
+            seekBars[bar].setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -183,12 +212,16 @@ public class SettingsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (v.equals(saveButton)) {
-                        Ships shipConfiguration = new Ships(s1,s2,s3,s4,s5,0,0,0,0,0);
-                        final DatabaseHelper db = new DatabaseHelper(v.getContext());
-                        String result =  db.insertShipsData(shipConfiguration);
-                        Toast.makeText(getView().getContext(),result, Toast.LENGTH_LONG).show();
+                        Ships shipConfiguration = new Ships(getS1(),getS2(),getS3(),getS4(),getS5(),0,0,0,0,0);
+                        if(saveShipSettings(shipConfiguration)) {
+                        Toast.makeText(getView().getContext(),"saved", Toast.LENGTH_LONG).show();
+                            Cursor cursor = dh.getShipsData();
+                            cursor.moveToFirst();
+                            cursor.getCount();
+                            cursor.getInt(cursor.getColumnIndex("ship1"));
+                        }
 
-                      setShips(shipConfiguration);
+//                      setShips(shipConfiguration);
 //                        Bundle args = new Bundle();
 //                        args.putSerializable(ships);
 //                        Fragment toFragment = new GameFragment();
@@ -206,6 +239,14 @@ public class SettingsFragment extends Fragment {
 
 
         return view;
+    }
+
+    private boolean saveShipSettings(Ships s) {
+        String result = dh.insertShipsData(s);
+        if(result.equals("saved")) {
+            return true;
+        }
+        return false;
     }
 
 

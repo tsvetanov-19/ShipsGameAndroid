@@ -1,4 +1,4 @@
-package com.example.ttsvetanov.shipsgame;
+package com.example.ttsvetanov.shipsgame.fragments;
 
 import android.support.v4.app.Fragment;
 import android.content.Context;
@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ttsvetanov.shipsgame.database.DatabaseHelper;
+import com.example.ttsvetanov.shipsgame.R;
 
 
 public class HistoryFragment extends Fragment {
