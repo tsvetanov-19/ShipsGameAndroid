@@ -216,17 +216,6 @@ public class SettingsFragment extends Fragment {
                     setV5(switches[sw].isChecked());
                     break;
             }
-//            if (sw != null) {
-//
-//                switches[sw].setOnCheckedChangeListener(
-//                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                    Toast.makeText(this, "The Switch is " + (isChecked ? "on" : "off"),
-//                            Toast.LENGTH_SHORT).show();
-//                    if(isChecked) {
-//
-//                    }
-//                });
-//            }
 
         }
 
@@ -279,23 +268,8 @@ public class SettingsFragment extends Fragment {
                         int s2 = shipConfiguration.getShip2();
                         if(saveShipSettings(shipConfiguration)) {
                         Toast.makeText(getView().getContext(),"saved", Toast.LENGTH_LONG).show();
-                            Cursor cursor = dh.getShipsData();
-                            cursor.moveToFirst();
-                            int cnt = cursor.getCount();
-                            int shipche = cursor.getInt(cursor.getColumnIndex("ship1"));
-                            int shipche2 = cursor.getInt(cursor.getColumnIndex("ship2"));
                         }
 
-//                      setShips(shipConfiguration);
-//                        Bundle args = new Bundle();
-//                        args.putSerializable(ships);
-//                        Fragment toFragment = new GameFragment();
-//                        toFragment.setArguments(args);
-//                        getFragmentManager().beginTransaction().rep
-//                        Fragment fragment = getActivity().getSupportFragmentManager().findFragmentByTag("FRAG2");
-//                        getActivity().getSupportFragmentManager().replace(R.id.yourFrameLayout,,"FRAG2");
-                    } else {
-                        // do something else
                     }
                 }
             };

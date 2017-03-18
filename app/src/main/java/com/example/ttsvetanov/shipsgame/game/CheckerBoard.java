@@ -8,7 +8,7 @@ import java.util.Random;
  * square value = 0 if no ship
  * square value = 1 if ship1 is on the square
  * ... etc
- * square value = 1 if ship5 is on the square
+ * square value = 5 if ship5 is on the square
  * Created by ttsvetanov on 02.03.17.
  */
 
@@ -48,8 +48,10 @@ public class CheckerBoard {
         int shipIndex = 0;
         if(ships.length > 0) {
             for (int size: ships) {
-                setCurrentShip(size, isVertical[shipIndex], shipIndex+1);
-                shipIndex++;
+                if(size > 0 ) {
+                    setCurrentShip(size, isVertical[shipIndex], shipIndex+1);
+                    shipIndex++;
+                }
             }
         }
     }

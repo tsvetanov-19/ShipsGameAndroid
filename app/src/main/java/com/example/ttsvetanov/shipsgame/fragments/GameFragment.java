@@ -148,40 +148,40 @@ public class GameFragment extends Fragment {
         int[] ships = {5,5,5,5,5};// new int[5];//
         int max = 0;
         boolean[] isVertical = {true,true,true, true,true};//new boolean[5];//
-        setMaxShots(5);
+//        setMaxShots(5);
         int totalShips = 0;
-//        if (cursor.moveToFirst()) {
-//            max = cursor.getInt(cursor.getColumnIndex("max_shots"));
-//            setMaxShots(max);
-//            int[] ship = new int[5];
-//            boolean[] vertical = new boolean[5];
-//            ship[0] = cursor.getInt(cursor.getColumnIndex("ship1")) ;
-//            ship[1] = cursor.getInt(cursor.getColumnIndex("ship2"));
-//            ship[2] = cursor.getInt(cursor.getColumnIndex("ship3"));
-//            ship[3]= cursor.getInt(cursor.getColumnIndex("ship4"));
-//            ship[4]= cursor.getInt(cursor.getColumnIndex("ship5"));
-//
-//
-//            vertical[0] = cursor.getInt(cursor.getColumnIndex("orientation_ship1")) > 0;
-//            vertical[1] = cursor.getInt(cursor.getColumnIndex("orientation_ship2")) > 0;
-//            vertical[2] = cursor.getInt(cursor.getColumnIndex("orientation_ship3")) > 0;
-//            vertical[3] = cursor.getInt(cursor.getColumnIndex("orientation_ship4")) > 0;
-//            vertical[4] = cursor.getInt(cursor.getColumnIndex("orientation_ship5")) > 0;
-//
-//            for(int i = 0 ; i<ship.length-1;i++) {
-//                if(ship[i] > 0) {
-//                    ships[totalShips] = ship[i];
-//                    isVertical[totalShips] = vertical[i];
-//                    totalShips++;
-//                }
-//            }
-//        }
-//        cursor.close();
+        if (cursor.moveToFirst()) {
+            max = cursor.getInt(cursor.getColumnIndex("max_shots"));
+            setMaxShots(45);
+            int[] ship = new int[5];
+            boolean[] vertical = new boolean[5];
+            ship[0] = cursor.getInt(cursor.getColumnIndex("ship1")) ;
+            ship[1] = cursor.getInt(cursor.getColumnIndex("ship2"));
+            ship[2] = cursor.getInt(cursor.getColumnIndex("ship3"));
+            ship[3]= cursor.getInt(cursor.getColumnIndex("ship4"));
+            ship[4]= cursor.getInt(cursor.getColumnIndex("ship5"));
+
+
+            vertical[0] = cursor.getInt(cursor.getColumnIndex("orientation_ship1")) > 0;
+            vertical[1] = cursor.getInt(cursor.getColumnIndex("orientation_ship2")) > 0;
+            vertical[2] = cursor.getInt(cursor.getColumnIndex("orientation_ship3")) > 0;
+            vertical[3] = cursor.getInt(cursor.getColumnIndex("orientation_ship4")) > 0;
+            vertical[4] = cursor.getInt(cursor.getColumnIndex("orientation_ship5")) > 0;
+
+            for(int i = 0 ; i<ship.length-1;i++) {
+                if(ship[i] > 0) {
+                    ships[totalShips] = ship[i];
+                    isVertical[totalShips] = vertical[i];
+                    totalShips++;
+                }
+            }
+        }
+        cursor.close();
         for (int s = 0; s<ships.length;s++) {
             shipSquaresTotal += ships[s];
         }
 
-        if (true || totalShips> 0) {
+        if (totalShips> 0) {
             board.setShips(ships, isVertical);
         } else {
             Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
