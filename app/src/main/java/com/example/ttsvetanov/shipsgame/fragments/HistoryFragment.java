@@ -11,6 +11,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ttsvetanov.shipsgame.database.DatabaseHelper;
 import com.example.ttsvetanov.shipsgame.R;
@@ -27,11 +28,11 @@ public class HistoryFragment extends Fragment {
             DatabaseHelper.COLUMN_GAME_TURNS
     };
 
-    int[] toGame = new int[]{
-            R.id.history_date,
-            R.id.history_result,
-            R.id.history_turns
-    };
+//    int[] toGame = new int[]{
+//            R.id.history_date,
+//            R.id.history_result,
+//            R.id.history_turns
+//    };
     public DatabaseHelper dh;
 
     private OnFragmentInteractionListener mListener;
@@ -46,29 +47,36 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dh = new DatabaseHelper(this.getContext());
-        Cursor cursor = dh.getGameData();
-        if (cursor.moveToFirst()){
-            while(!cursor.isAfterLast()){
-                String date = cursor.getString(cursor.getColumnIndex("date"));
-                String result = cursor.getString(cursor.getColumnIndex("result"));
-                String turns = cursor.getString(cursor.getColumnIndex("turns"));
-                // do what ever you want here
-                cursor.moveToNext();
-            }
-        }
-        cursor.close();
 
-        simpleCursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_history, cursor, fromGame, toGame
-                , CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
+
+//        simpleCursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_history, cursor, fromGame, toGame
+//                , CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
+
+        dh = new DatabaseHelper(this.getContext());
+        Cursor cursor = dh.getGameData();
+        String games = "";
+        if (cursor.moveToFirst()){
+            while(!cursor.isAfterLast()){
+                String date = cursor.getString(cursor.getColumnIndex("date"));
+                String result = cursor.getString(cursor.getColumnIndex("result"));
+                String turns = cursor.getString(cursor.getColumnIndex("turns"));
+                games += String.format("%s %s %s ", date, result, turns);
+                // do what ever you want here
+                cursor.moveToNext();
+            }
+        }
+        cursor.close();
+        TextView gameText=(TextView) view.findViewById(R.id.history_result);
+        gameText.setText(games);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_history, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

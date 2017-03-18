@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +48,7 @@ public class GameFragment extends Fragment {
     private GridView mGridView;
     private int shots = 0;
 
-    private DatabaseHelper dh = new DatabaseHelper(getContext());
+    private DatabaseHelper dh;
 
 
     private int hits = 0;
@@ -143,9 +145,11 @@ public class GameFragment extends Fragment {
 
         dh = new DatabaseHelper(this.getContext());
         Cursor cursor = dh.getShipsData();
-        int[] ships =  {5,5,5,5,5};
+        int[] ships = {5,5,5,5,5};// new int[5];//
         int max = 0;
-        boolean[] isVertical = {true,true,true, true,true};
+        boolean[] isVertical = {true,true,true, true,true};//new boolean[5];//
+        setMaxShots(5);
+        int totalShips = 0;
 //        if (cursor.moveToFirst()) {
 //            max = cursor.getInt(cursor.getColumnIndex("max_shots"));
 //            setMaxShots(max);
@@ -163,22 +167,21 @@ public class GameFragment extends Fragment {
 //            vertical[2] = cursor.getInt(cursor.getColumnIndex("orientation_ship3")) > 0;
 //            vertical[3] = cursor.getInt(cursor.getColumnIndex("orientation_ship4")) > 0;
 //            vertical[4] = cursor.getInt(cursor.getColumnIndex("orientation_ship5")) > 0;
-//            int totalShips = 0;
-//            for(int i = 0 ; i<ship.length;i++) {
+//
+//            for(int i = 0 ; i<ship.length-1;i++) {
 //                if(ship[i] > 0) {
-//                    totalShips++;
 //                    ships[totalShips] = ship[i];
 //                    isVertical[totalShips] = vertical[i];
+//                    totalShips++;
 //                }
 //            }
 //        }
-        cursor.close();
-        for (int s: ships) {
-            shipSquaresTotal += s;
+//        cursor.close();
+        for (int s = 0; s<ships.length;s++) {
+            shipSquaresTotal += ships[s];
         }
 
-        if (ships.length > 0) {
-
+        if (true || totalShips> 0) {
             board.setShips(ships, isVertical);
         } else {
             Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
@@ -207,14 +210,15 @@ public class GameFragment extends Fragment {
                     //Player wins!
                     if(getHits() == getShipSquaresTotal()) {
                         finishGame("won",getShots());
+                        Toast.makeText(v.getContext(), "You've won!" + hits,
+                                Toast.LENGTH_SHORT).show();
                     }
 
-//                    Toast.makeText(v.getContext(), "pos: " + board.getSquare(position) + " id: " + id,
-//                            Toast.LENGTH_SHORT).show();
+
                     //Player loses!
                     if(getShots() == getMaxShots()) {
                         finishGame("lost", getShots());
-                        Toast.makeText(v.getContext(), "END" + hits,
+                        Toast.makeText(v.getContext(), "GAME OVER " + hits,
                                 Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -248,8 +252,15 @@ public class GameFragment extends Fragment {
         Game g = new Game();
         g.setResult(result);
         g.setTurns(Integer.toString(shots));
-        g.setDate("data data vajna data");
+        g.setDate(Utils.fromDateToString(new Date()));
         dh.insertNewGame(g);
+
+        Fragment fragment = new HistoryFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -287,7 +298,5 @@ public class GameFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Snackbar.make(getView(), "Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
     }
 }

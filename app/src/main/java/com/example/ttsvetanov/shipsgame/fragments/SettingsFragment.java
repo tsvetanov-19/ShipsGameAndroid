@@ -49,6 +49,53 @@ public class SettingsFragment extends Fragment {
     public int s4;
     public int s5;
 
+    public boolean v1 = false;
+    public boolean v2 = false;
+    public boolean v3 = false;
+    public boolean v4 = false;
+    public boolean v5 = false;
+
+    public boolean isV1() {
+        return v1;
+    }
+
+    public void setV1(boolean v1) {
+        this.v1 = v1;
+    }
+
+    public boolean isV2() {
+        return v2;
+    }
+
+    public void setV2(boolean v2) {
+        this.v2 = v2;
+    }
+
+    public boolean isV3() {
+        return v3;
+    }
+
+    public void setV3(boolean v3) {
+        this.v3 = v3;
+    }
+
+    public boolean isV4() {
+        return v4;
+    }
+
+    public void setV4(boolean v4) {
+        this.v4 = v4;
+    }
+
+    public boolean isV5() {
+        return v5;
+    }
+
+    public void setV5(boolean v5) {
+        this.v5 = v5;
+    }
+
+
     public Ships getShips() {
         return ships;
     }
@@ -150,20 +197,36 @@ public class SettingsFragment extends Fragment {
                 (Switch) view.findViewById(R.id.switch5)
         };
 
-        for(Switch s : switches) {
-            if (s != null) {
 
-//                s.setOnCheckedChangeListener(
+        for(int sw = 0; sw < switches.length; sw++) {
+            switch (switches[sw].getId()) {
+                case R.id.switch1:
+                    setV1(switches[sw].isChecked());
+                    break;
+                case R.id.switch2:
+                    setV2(switches[sw].isChecked());
+                    break;
+                case R.id.switch3:
+                    setV3(switches[sw].isChecked());
+                    break;
+                case R.id.switch4:
+                    setV4(switches[sw].isChecked());
+                    break;
+                case R.id.switch5:
+                    setV5(switches[sw].isChecked());
+                    break;
+            }
+//            if (sw != null) {
+//
+//                switches[sw].setOnCheckedChangeListener(
 //                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                    Toast.makeText(this, "The Switch is " + (isChecked ? "on" : "off"),
 //                            Toast.LENGTH_SHORT).show();
 //                    if(isChecked) {
-//                        //do stuff when Switch is ON
-//                    } else {
-//                        //do stuff when Switch if OFF
+//
 //                    }
 //                });
-            }
+//            }
 
         }
 
@@ -212,13 +275,15 @@ public class SettingsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     if (v.equals(saveButton)) {
-                        Ships shipConfiguration = new Ships(getS1(),getS2(),getS3(),getS4(),getS5(),0,0,0,0,0);
+                        Ships shipConfiguration = new Ships(getS1(),getS2(),getS3(),getS4(),getS5(), isV1(), isV2(), isV3(), isV4(), isV5());
+                        int s2 = shipConfiguration.getShip2();
                         if(saveShipSettings(shipConfiguration)) {
                         Toast.makeText(getView().getContext(),"saved", Toast.LENGTH_LONG).show();
                             Cursor cursor = dh.getShipsData();
                             cursor.moveToFirst();
-                            cursor.getCount();
-                            cursor.getInt(cursor.getColumnIndex("ship1"));
+                            int cnt = cursor.getCount();
+                            int shipche = cursor.getInt(cursor.getColumnIndex("ship1"));
+                            int shipche2 = cursor.getInt(cursor.getColumnIndex("ship2"));
                         }
 
 //                      setShips(shipConfiguration);

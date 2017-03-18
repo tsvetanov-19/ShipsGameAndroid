@@ -29,22 +29,21 @@ public class Ships implements Serializable{
     private int shipSquaresTotal;
     private int maxGameShots;
 
-    public Ships(int s1, int s2, int s3, int s4, int s5, int s1o, int s2o, int s3o, int s4o, int s5o) {
-        this.ship1 = s1;
-        this.ship2 = s2;
-        this.ship3 = s3;
-        this.ship4 = s4;
-        this.ship5 = s5;
+    public Ships(int s1, int s2, int s3, int s4, int s5, boolean s1o, boolean s2o, boolean s3o, boolean s4o, boolean s5o) {
+        setShip1(s1);
+        setShip2(s2);
+        setShip3(s3);
+        setShip4(s4);
+        setShip5(s5);
 
-        this.ship1_orientation = s1o;
-        this.ship1_orientation = s2o;
-        this.ship1_orientation = s3o;
-        this.ship1_orientation = s4o;
-        this.ship1_orientation = s5o;
+        ship1_orientation = (s1o) ? 1 : 0;
+        ship2_orientation = (s2o) ? 1 : 0;
+        ship3_orientation = (s3o) ? 1 : 0;
+        ship4_orientation = (s4o) ? 1 : 0;
+        ship5_orientation = (s5o) ? 1 : 0;
+
         setMaxGameShots();
-        this.maxGameShots = getMaxGameShots();
-        setShipSquaresTotal();
-        this.shipSquaresTotal = getShipSquaresTotal();
+        setShipSquaresTotal(sumShipSquaresTotal());
 
     }
 
@@ -74,8 +73,14 @@ public class Ships implements Serializable{
 
     public void setMaxGameShots() {
         Random rand = new Random();
-        maxGameShots = getShipSquaresTotal() + rand.nextInt(12);
+        this.maxGameShots = getShipSquaresTotal() + rand.nextInt(12);
 //        return maxGameShots;
+    }
+
+    public int sumShipSquaresTotal() {
+        int total = getShip1()+ getShip2()+getShip3()+getShip4()+getShip5();
+        setShipSquaresTotal(total);
+        return total;
     }
 
     public int getShipSquaresTotal() {
@@ -83,8 +88,8 @@ public class Ships implements Serializable{
     }
 
 
-    public void setShipSquaresTotal() {
-        shipSquaresTotal = ship1 + ship2 + ship3 + ship4 + ship5;
+    public void setShipSquaresTotal(int value) {
+        this.shipSquaresTotal = value;
     }
 
     public int getShip1_orientation() {
@@ -92,7 +97,7 @@ public class Ships implements Serializable{
     }
 
     public void setShip1_orientation(int ship1_orientation) {
-        ship1_orientation = ship1_orientation;
+        this.ship1_orientation = ship1_orientation;
     }
 
     public int getShip2_orientation() {
@@ -100,7 +105,7 @@ public class Ships implements Serializable{
     }
 
     public void setShip2_orientation(int ship2_orientation) {
-        ship2_orientation = ship2_orientation;
+        this.ship2_orientation = ship2_orientation;
     }
 
     public int getShip3_orientation() {
@@ -108,7 +113,7 @@ public class Ships implements Serializable{
     }
 
     public void setShip3_orientation(int ship3_orientation) {
-        ship3_orientation = ship3_orientation;
+        this.ship3_orientation = ship3_orientation;
     }
 
     public int getShip4_orientation() {
@@ -116,7 +121,7 @@ public class Ships implements Serializable{
     }
 
     public void setShip4_orientation(int ship4_orientation) {
-        ship4_orientation = ship4_orientation;
+        this.ship4_orientation = ship4_orientation;
     }
 
     public int getShip5_orientation() {

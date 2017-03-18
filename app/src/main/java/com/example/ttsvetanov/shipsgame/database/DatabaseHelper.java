@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     SQLiteDatabase db;
 
     public static final String DB_NAME = "shipsgame.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 5;
     public static final String ERROR_TAG = "error";
 
     //Table names
@@ -28,13 +28,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_SHIPS = "ships";
 
     //table game
-    public static final String COLUMN_GAME_ID = "_id";
+    public static final String COLUMN_GAME_ID = "id";
     public static final String COLUMN_GAME_DATE = "date";
     public static final String COLUMN_GAME_RESULT = "result";
     public static final String COLUMN_GAME_TURNS = "turns";
 
     //table ships
-    public static final String COLUMN_SHIP_ID = "_id";
+    public static final String COLUMN_SHIP_ID = "id";
 
     public static final String COLUMN_SHIP_1 = "ship1";
     public static final String COLUMN_SHIP_2 = "ship2";
@@ -60,18 +60,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String CREATE_TABLE_SHIPS =
             "CREATE TABLE " + TABLE_SHIPS + "(" +
-                    "`" + COLUMN_SHIP_ID + "` INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "`" + COLUMN_SHIP_1 + "` INTEGER," +
-                    "`" + COLUMN_SHIP_2 + "` INTEGER," +
-                    "`" + COLUMN_SHIP_3 + "` INTEGER," +
-                    "`" + COLUMN_SHIP_4 + "` INTEGER," +
-                    "`" + COLUMN_SHIP_5 + "` INTEGER," +
-                    "`" + COLUMN_SHIP_1_ORIENTATION + "` INTEGER," +
-                    "`" + COLUMN_SHIP_2_ORIENTATION + "` INTEGER," +
-                    "`" + COLUMN_SHIP_3_ORIENTATION + "` INTEGER," +
-                    "`" + COLUMN_SHIP_4_ORIENTATION + "` INTEGER," +
-                    "`" + COLUMN_SHIP_5_ORIENTATION + "` INTEGER," +
-                    "`" + COLUMN_MAX_SHOTS + "` INTEGER NOT NULL DEFAULT 25)";
+                    "'" + COLUMN_SHIP_ID + "' INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "'" + COLUMN_SHIP_1 + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_2 + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_3 + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_4 + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_5 + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_1_ORIENTATION + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_2_ORIENTATION + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_3_ORIENTATION + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_4_ORIENTATION + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_SHIP_5_ORIENTATION + "' INTEGER NOT NULL," +
+                    "'" + COLUMN_MAX_SHOTS + "' INTEGER NOT NULL DEFAULT 25)";
 
 
     public DatabaseHelper(Context context) {
@@ -124,7 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public String insertShipsData(Ships ships) {
-        String status = "saved";
+        String status = "todo";
 
         try {
             db = getWritableDatabase();
@@ -135,7 +135,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cv.put(DatabaseHelper.COLUMN_SHIP_2, ships.getShip2());
             cv.put(DatabaseHelper.COLUMN_SHIP_3, ships.getShip3());
             cv.put(DatabaseHelper.COLUMN_SHIP_4, ships.getShip4());
-            cv.put(DatabaseHelper.COLUMN_SHIP_5, ships.getShip5());;
+            cv.put(DatabaseHelper.COLUMN_SHIP_5, ships.getShip5());
 
             cv.put(DatabaseHelper.COLUMN_SHIP_1_ORIENTATION, ships.getShip1_orientation());
             cv.put(DatabaseHelper.COLUMN_SHIP_2_ORIENTATION, ships.getShip2_orientation());
@@ -146,7 +146,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
             db.insertOrThrow(DatabaseHelper.TABLE_SHIPS, null, cv);
-
+            status = "saved";
         }catch (SQLException e){
             status = e.getMessage();
 
