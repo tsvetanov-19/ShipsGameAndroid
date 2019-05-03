@@ -28,11 +28,6 @@ public class HistoryFragment extends Fragment {
             DatabaseHelper.COLUMN_GAME_TURNS
     };
 
-//    int[] toGame = new int[]{
-//            R.id.history_date,
-//            R.id.history_result,
-//            R.id.history_turns
-//    };
     public DatabaseHelper dh;
 
     private OnFragmentInteractionListener mListener;
@@ -47,10 +42,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-//        simpleCursorAdapter = new SimpleCursorAdapter(getContext(), R.layout.fragment_history, cursor, fromGame, toGame
-//                , CursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
 
     }
 
@@ -89,12 +80,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override

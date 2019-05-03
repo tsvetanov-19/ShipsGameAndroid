@@ -145,10 +145,9 @@ public class GameFragment extends Fragment {
 
         dh = new DatabaseHelper(this.getContext());
         Cursor cursor = dh.getShipsData();
-        int[] ships = {5,5,5,5,5};// new int[5];//
+        int[] ships = {5,5,5,5,5};
         int max = 0;
-        boolean[] isVertical = {true,true,true, true,true};//new boolean[5];//
-//        setMaxShots(5);
+        boolean[] isVertical = {true,true,true, true,true};
         int totalShips = 0;
         if (cursor.moveToFirst()) {
             max = cursor.getInt(cursor.getColumnIndex("max_shots"));
@@ -223,8 +222,6 @@ public class GameFragment extends Fragment {
                     }
                 }
 
-//                view.setImageResource(im.mThumbIds[position]);
-
             }
         });
         return view;
@@ -241,7 +238,6 @@ public class GameFragment extends Fragment {
 
     protected int uncover(int position) {
         int value = board.getSquare(position);
-//        if(value)
         mImageAdapter.flipImage(position, value);
         mImageAdapter.notifyDataSetChanged();
         return value;
@@ -266,12 +262,6 @@ public class GameFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-//        if (context instanceof OnFragmentInteractionListener) {
-//            mListener = (OnFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnFragmentInteractionListener");
-//        }
     }
 
     @Override
